@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 /*
 const passTest = true
 let driversLicense = false
@@ -36,7 +36,7 @@ function fruitProcessor(apples, oranges, pieces){
 
 console.log(fruitProcessor(1, 2, 4))
 
- */ 
+ */
 /* 
 
 const average = (s1, s2, s3)=>{
@@ -135,28 +135,31 @@ function options(){
    return result
 }
 */
+/*
+let bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+let tips = [];
+let totals = [];
 
-let bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52]
-let tips = []
-let totals = []
+for (let i = 0; i < bills.length; i++) {
+  function calcTip(bills) {
+    let result = bills >= 50 && bills <= 300 ? bills * 0.15 : bills * 0.2;
+    return result;
+  }
+  tips.push(calcTip(bills[i]));
 
-for(let i = 0; i < bills.length ; i++){
-   
-   function calcTip(bills) {
-      let result = bills >= 50 && bills <= 300 ? bills * 0.15 : bills * 0.20
-      return result
-   }
-   tips.push(calcTip(bills[i]))
-   totals.push(tips[i] + bills[i])
+  totals.push(tips[i] + bills[i]);
 }
-console.log(bills, tips, totals)
-console.log(calcAverage(totals))
+console.log(bills, tips, totals);
+console.log(calcAverage(totals));
 
-function calcAverage(arr){
-   let sum = 0
-   for(let i = 0; i < arr.length; i++){
-      sum += arr[i]
-   }
-   let average = sum / arr.length
-   return average
+function calcAverage(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+  }
+  let average = sum / arr.length;
+  return average;
 }
+*/
+
+1;
