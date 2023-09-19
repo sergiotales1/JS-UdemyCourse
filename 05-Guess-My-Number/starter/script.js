@@ -11,19 +11,23 @@ const again = document.querySelector('.again');
 let score1 = 20;
 
 checkEl.addEventListener('click', () => {
-  if (guessValue.value == number) {
-    score += 0;
-    labelEl.textContent = guessValue.value;
-    document.querySelector('.highscore').textContent = score1;
-    labelEl.style.width = '30rem';
-    bodyEl.style.backgroundColor = '#60b347';
-    message.textContent = 'Correct Number!';
-  } else if (guessValue.value > number) {
-    message.textContent = 'Too High...';
-    score1--;
+  if (guessValue.value == '') {
+    message.textContent = '🛑 Incorrect value';
   } else {
-    message.textContent = 'Too Low...';
-    score1--;
+    if (guessValue.value == number) {
+      score += 0;
+      labelEl.textContent = guessValue.value;
+      document.querySelector('.highscore').textContent = score1;
+      labelEl.style.width = '30rem';
+      bodyEl.style.backgroundColor = '#60b347';
+      message.textContent = 'Correct Number!';
+    } else if (guessValue.value > number) {
+      message.textContent = 'Too High...';
+      score1--;
+    } else {
+      message.textContent = 'Too Low...';
+      score1--;
+    }
   }
   document.querySelector('.score').textContent = score1;
 });
