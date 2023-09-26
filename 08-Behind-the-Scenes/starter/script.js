@@ -32,14 +32,14 @@ matilda.calcAge = jonas.calcAge;
 matilda.calcAge();
 
 */
-
+/*
 const jonas = {
   firstName: 'Jonas',
   year: 1991,
   calcAge: function () {
     console.log(2037 - this.year);
 
-    /*
+    
     solution 1
     const self = this;
     const isMillenial = function () {
@@ -47,7 +47,7 @@ const jonas = {
       console.log(self.year >= 1981 && self.year <= 1996);
     };
 
-    */
+   
     // solution 2
     const isMillenial = () => {
       console.log(this);
@@ -64,3 +64,13 @@ function addExpr(a, b) {
   return a + b;
 }
 addExpr(2, 5);
+*/
+
+const me = {
+  name: 'jonas',
+  age: 30,
+};
+
+const friend = me;
+friend.age = 27;
+console.log(me.age);
