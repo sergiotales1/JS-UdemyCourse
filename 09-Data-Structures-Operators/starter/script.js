@@ -50,6 +50,42 @@ const restaurant = {
 };
 
 /*
+const rest1 = {
+  name: 'Capri',
+  numGuests: 0,
+};
+
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi',
+};
+
+// rest1.numGuests = rest1.numGuests || 10;
+// rest2.numGuests = rest2.numGuests || 10;
+// OR assignment operator
+
+// rest1.numGuests ||= 10;
+// rest2.numGuests ||= 10;
+
+// nullish assignment operator null or undefined
+rest1.numGuests ??= 10;
+rest2.numGuests ??= 10;
+
+rest1.owner &&= '<ANONYMOUS>';
+rest2.owner &&= '<ANONYMOUS>';
+
+console.log(rest1);
+console.log(rest2);
+
+// restaurant.guestNum = undefined;
+// restaurant.guestNum = null;
+restaurant.guestNum = 0;
+// const guests1 = restaurant.guestNum || 10;
+
+// Nullish: null and undefined (NOT 0 or '')
+const guest1 = restaurant.guestNum ?? 10;
+console.log(guest1);
+
 // Use ANY data-type, return ANY data-type, short-circuiting
 console.log('-------- OR --------');
 console.log(3 || 'test');
