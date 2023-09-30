@@ -54,15 +54,12 @@ const allPlayers = [...players1, ...players2];
 // console.log(allPlayers);
 
 // 4-
-const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Periscic'];
 console.log(players1Final);
 
 // 5-
 const { team1: team1, x: draw, team2: team2 } = game.odds;
-
-// console.log(team1);
-// console.log(draw);
-// console.log(team2);
+// console.log(team1, draw, team2);
 
 // 6-
 printGoals(...game.scored);
@@ -74,4 +71,7 @@ function printGoals(...players) {
 }
 
 // 7-
-console.log(team1 > team2 || team2 < team1);
+team1 < team2 && console.log('Team 1 is more likely to win');
+team2 < team1 && console.log('Team 2 is more likely to win');
+
+// here we got true and print the last true value (console.log will always be true)
