@@ -51,6 +51,30 @@ const restaurant = {
 };
 
 /*
+const ordersSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza']);
+console.log(ordersSet);
+
+console.log(new Set('Sergio'));
+console.log(ordersSet.size);
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('Bread'));
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+ordersSet.delete('Risotto');
+// ordersSet.clear
+console.log(ordersSet);
+for(const item of ordersSet) console.log(item)
+
+// Example
+
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']
+
+const staffUnique = [...new Set(staff)]
+console.log(staffUnique)
+console.log(new Set(staff).size)
+
+console.log(new Set('jonassschemdtmann').size)
+
   // Property NAMES
   const properties = Object.keys(openingHours);
   console.log(properties);
