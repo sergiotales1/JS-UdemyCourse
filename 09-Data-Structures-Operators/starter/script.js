@@ -51,6 +51,62 @@ const restaurant = {
 };
 
 const airline = 'TAP Air Portugal';
+
+console.log(airline.toUpperCase());
+console.log(airline.toLowerCase());
+
+const correctName = function (param) {
+  let lowerParam = param.toLowerCase();
+  let correctParam = lowerParam[0].toUpperCase() + lowerParam.slice(1);
+  return correctParam;
+};
+
+console.log(correctName('sErGIO'));
+
+// Comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '     hello@jonas.io \n';
+
+console.log((checkMail(email, loginEmail) && 'Email CORRECT!') || 'Email INCORRECT.');
+function checkMail(email, loginEmail) {
+  return loginEmail.toLowerCase().trim() === email;
+}
+
+// Replacing
+
+const priceGB = '288,99P';
+const priceUS = priceGB.replace('P', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement = 'All passengers come to boarding door 23. Boarding door 23!';
+
+console.log(announcement.replaceAll('door', 'gate'));
+
+// Booleans
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));
+console.log(plane.includes('Boeing'));
+console.log(plane.startsWith('Air'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of neo');
+}
+// Practice exercise
+function checkBaggage(items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are not allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+}
+
+checkBaggage('I have a laptop, some Food, and a pocket Knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection');
+/*
+// Working with strings part 1
+const airline = 'TAP Air Portugal';
 const plane = 'A320';
 
 console.log(plane[0]);
@@ -84,7 +140,6 @@ const checkMiddleSeat = function (seat) {
 checkMiddleSeat('11B');
 checkMiddleSeat('23C');
 checkMiddleSeat('3E');
-/*
 const question = new Map([
   ['question', 'What is the best programming language in the world?'],
   [1, 'C'],
