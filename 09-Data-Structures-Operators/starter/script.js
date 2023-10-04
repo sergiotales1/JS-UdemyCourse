@@ -1,9 +1,5 @@
 'use strict';
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
 const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const openingHours = {
   [weekDays[2]]: {
@@ -50,8 +46,73 @@ const restaurant = {
   },
 };
 
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+const getCode = str => str.slice(0, 3).toUpperCase();
+const flightsArray = flights.split('+');
+console.log(flightsArray);
+for (const [i, value] of flightsArray.entries()) {
+  const valueArray = value.replaceAll('_', ' ').trim().split(';');
+  const [title, from, to, time] = valueArray;
+  let output = `${title.includes('Delayed') ? '🔴' : ''}${title} from ${getCode(from)} to ${getCode(
+    to
+  )} (${time.replace(':', 'h')})`.padStart(44);
+  console.log(output);
+}
+
+/*
+// Split and Join
+console.log('a+very+long+string'.split('+'));
+console.log('Sergio Tales'.split(' '));
+
+const [firstName, secondName] = 'Sergio Tales'.split(' ');
+console.log(secondName);
+
+const newName = ['Mr.', firstName, secondName.toUpperCase()].join(' ');
+console.log(newName);
+
+const capitalizeName = function (name) {
+  const names = name.split(' ');
+  let allNames = [];
+
+  for (const n of names) {
+    // allNames.push(n[0].toUpperCase() + n.slice(1));
+    allNames.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(allNames.join(' '));
+};
+
+
+capitalizeName('jessica ann smith davis');
+capitalizeName('jonas schemetmann');
+
+// Padding
+const message = 'Go to gate 23!'
+console.log(message.padStart(25, '-').padEnd(35, '-'))
+console.log('test'.padStart(10, '*').padEnd(16, '*'))
+
+function maskNumber(number){
+
+  let num = number.slice(-4)
+  console.log(num.padStart(number.length, '*'))
+}
+
+maskNumber(1111222233334565+'')
+
+// Repeat
+
+const message2 = 'Bad weather... All departures delayed...'
+
+console.log(message2.repeat(5))
+
+function countPlanes(n){
+  console.log(`there are ${n} planes waiting to take off ${'✈'.repeat(n)}`)
+}
+
+countPlanes(12)
 const airline = 'TAP Air Portugal';
 
+// Working with strings - part 2 
 console.log(airline.toUpperCase());
 console.log(airline.toLowerCase());
 
@@ -104,7 +165,6 @@ function checkBaggage(items) {
 checkBaggage('I have a laptop, some Food, and a pocket Knife');
 checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection');
-/*
 // Working with strings part 1
 const airline = 'TAP Air Portugal';
 const plane = 'A320';
