@@ -50,8 +50,8 @@ const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 const getCode = str => str.slice(0, 3).toUpperCase();
 const flightsArray = flights.split('+');
-console.log(flightsArray);
-for (const [i, value] of flightsArray.entries()) {
+
+for (const value of flightsArray) {
   const valueArray = value.replaceAll('_', ' ').trim().split(';');
   const [title, from, to, time] = valueArray;
   let output = `${title.includes('Delayed') ? '🔴' : ''}${title} from ${getCode(from)} to ${getCode(
