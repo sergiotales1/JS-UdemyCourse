@@ -195,4 +195,20 @@ console.log(higherRate(0.1)(100));
 const higherRatePT = higherRate(0.23);
 console.log(higherRatePT(100));
 
+
+// IIFE
+
+(function () {
+  console.log('This will be displayed only one time');
+  let privateV = 0;
+})();
+
+// console.log(privateV)
+
+{
+  const test = 1;
+  var test1 = 2;
+}
+console.log(test1);
+
 */
