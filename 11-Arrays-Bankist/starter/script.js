@@ -65,12 +65,128 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
+
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+/////////////////////////////////////////////////
+
+/*
+
+let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// SLICE
+// Does'nt change the array
+
+console.log(arr.slice(1));
+console.log(arr.slice(2, 4));
+console.log(arr.slice(-4, -3));
+
+// into slice you will SLICE according the start and end index for example arr.slice(2, 4) will not count 4 as well and will show ['c', 'd']
+// remember that the length of the slice is corresponding the end - final (4 - 2 = 2)
+
+console.log(arr.slice()); // create a copy of the array as same as...
+console.log([...arr]);
+
+console.log('-splice-');
+// SPLICE
+// Does change the array
+// console.log(arr.splice(2));
+console.log(arr); // here we can see that splice actually removes the items under the index sent
+
+// to remove the last element of array as same as .pop() you use:
+arr.splice(-1);
+console.log(arr);
+
+// now with SPLICE you will have 2 params, the first is the start and the second is the amount of removed elements that you want
+// for example arr.splice(1, 2) will remove ['b', 'c']
+arr.splice(1, 2);
+console.log(arr);
+
+console.log('-REVERSE-');
+
+// REVERSE
+// Does mutate the array
+
+arr = ['a', 'b', 'c', 'd', 'e'];
+console.log(arr);
+const arr2 = ['j', 'i', 'h', 'g', 'f'];
+console.log(arr2.reverse());
+
+// CONCAT
+const letters = arr.concat(arr2);
+console.log(letters);
+console.log([...arr, ...arr2]);
+
+// JOIN
+console.log(letters.join(' - '));
+
+
+// AT method
+
+const arr = [23, 11, 64];
+console.log(arr[0]);
+console.log(arr.at(0));
+
+// getting the last element
+console.log(arr[arr.length - 1]);
+console.log(arr.slice(-1)[0]);
+
+// there you got the last element
+console.log(arr.at(-2));
+
+console.log('jonas'.at(0));
+console.log('jonas'.at(-1));
+
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// USING FOR OF
+for (let movement of movements) {
+if (movement > 0) {
+/    console.log(`You deposited ${movement}`);
+} else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+for (let [i, movement] of movements.entries()) {
+if (movement > 0) {
+console.log(`Movement ${i + 1}: You deposited ${movement}`);
+} else {
+console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+}
+}
+
+// USING FOR EACH
+console.log('-');
+movements.forEach(movFun);
+
+function movFun(mov, i, arr) {
+if (mov > 0) {
+console.log(`Movement ${i + 1}: You deposited ${mov}`);
+} else {
+console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+}
+}
+
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+currencies.forEach((value, key, map) => {
+  console.log(`${key}: ${value}`);
+});
 
-/////////////////////////////////////////////////
+const currenciesUnique = new Set(['USD', 'USD', 'EUR', 'GBP']);
+currenciesUnique.forEach((value, key) => {
+  console.log(`${key}: ${value}`);
+});
+
+*/
