@@ -1,0 +1,3 @@
+194 - 211 :
+Using the movements__row to implant into html the data of the account1.movements with forEach method.
+Here we are basically updating the app with the movements.
