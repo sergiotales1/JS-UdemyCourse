@@ -1,3 +1,7 @@
 194 - 211 :
 Using the movements__row to implant into html the data of the account1.movements with forEach method.
 Here we are basically updating the app with the movements.
+
+224 - 234 :
+We use .map to change the strings of owner in order to create a username into every account array.
+We saw what is SIDE EFFECT that represents some kind of action or function that don't return anything just change the actual code.

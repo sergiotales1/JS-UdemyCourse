@@ -128,8 +128,19 @@ currenciesUnique.forEach((value, key) => {
   console.log(`${key}: ${value}`);
 });
 
-*/
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- MAP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+const eurToUsd = 1.1;
+const movementsUSD = movements.map(mov => mov * eurToUsd);
+// console.log(movementsUSD);
+
+const movementsDescription = movements.map(
+  (mov, i) => `Movement ${i + 1}: You ${mov > 0 ? 'deposit' : 'withdrew'}: ${Math.abs(mov)}`
+  );
+  console.log(movementsDescription);
+  
+  */
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -209,3 +220,15 @@ const displayMovements = function (movements) {
 };
 
 displayMovements(account1.movements);
+
+function createUsernames(accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(word => word[0])
+      .join('');
+  });
+}
+createUsernames(accounts);
+console.log(account1);
