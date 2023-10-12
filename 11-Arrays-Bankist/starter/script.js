@@ -140,7 +140,26 @@ const movementsDescription = movements.map(
   );
   console.log(movementsDescription);
   
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- FILTER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+  
+  const depositMovements = movements.filter(mov => mov > 0);
+  const withdrawalMovements = movements.filter(mov => mov < 0);
+  console.log(depositMovements);
+  console.log(withdrawalMovements);
+  
   */
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- REDUCE -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const balance = movements.reduce((acc, cur, i, arr) => {
+  console.log(`Iteration #${i}, accumulator: ${acc}`);
+  return acc + cur;
+}, 0);
+
+const maxValue = movements.reduce((acc, cur) => (acc < cur ? (acc = cur) : acc), 0);
+console.log(maxValue);
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -221,6 +240,13 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+calcDisplayBalance(account1.movements);
+
 function createUsernames(accs) {
   accs.forEach(acc => {
     acc.username = acc.owner
@@ -231,4 +257,3 @@ function createUsernames(accs) {
   });
 }
 createUsernames(accounts);
-console.log(account1);
