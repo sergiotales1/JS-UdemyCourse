@@ -136,19 +136,18 @@ const movementsUSD = movements.map(mov => mov * eurToUsd);
 // console.log(movementsUSD);
 
 const movementsDescription = movements.map(
-  (mov, i) => `Movement ${i + 1}: You ${mov > 0 ? 'deposit' : 'withdrew'}: ${Math.abs(mov)}`
-  );
-  console.log(movementsDescription);
-  
-  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- FILTER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-  const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-  
-  const depositMovements = movements.filter(mov => mov > 0);
-  const withdrawalMovements = movements.filter(mov => mov < 0);
-  console.log(depositMovements);
-  console.log(withdrawalMovements);
-  
-  */
+(mov, i) => `Movement ${i + 1}: You ${mov > 0 ? 'deposit' : 'withdrew'}: ${Math.abs(mov)}`
+);
+console.log(movementsDescription);
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- FILTER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const depositMovements = movements.filter(mov => mov > 0);
+const withdrawalMovements = movements.filter(mov => mov < 0);
+console.log(depositMovements);
+console.log(withdrawalMovements);
+
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- REDUCE -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -160,6 +159,47 @@ const balance = movements.reduce((acc, cur, i, arr) => {
 
 const maxValue = movements.reduce((acc, cur) => (acc < cur ? (acc = cur) : acc), 0);
 console.log(maxValue);
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const eurToUsd = 1.1;
+
+const totalDepositsUSD = movements
+.filter(mov => mov > 0)
+.map(mov => mov * eurToUsd)
+.reduce((acc, cur) => acc + cur, 0);
+console.log(totalDepositsUSD);
+
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- FIND -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// Returns the first value found with that requisite
+const firstWithDrawal = movements.find(mov => mov < 0);
+console.log(firstWithDrawal);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+for (let acc of accounts) {
+  if (acc.owner === 'Sarah Smith') console.log(acc);
+}
+
+const dog1 = {
+  name: 'Carlos Alberto',
+  age: 2,
+};
+const dog2 = {
+  name: 'Celso',
+  age: 3,
+};
+const dog3 = {
+  name: 'Alex',
+  age: 4,
+};
+
+const dogs = [dog1, dog2, dog3];
+
+console.log(dogs.find(name => name.name === 'Carlos Alberto'));
+*/
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -242,10 +282,27 @@ displayMovements(account1.movements);
 
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance}€`;
 };
 
 calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcome = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(outcome)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(mov => mov >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+
+calcDisplaySummary(account1.movements);
 
 function createUsernames(accs) {
   accs.forEach(acc => {
@@ -257,3 +314,10 @@ function createUsernames(accs) {
   });
 }
 createUsernames(accounts);
+
+// Event Handler
+btnLogin.addEventListener('click', e => {
+  // Prevent form from submitting
+  e.preventDefault();
+  console.log(e);
+});

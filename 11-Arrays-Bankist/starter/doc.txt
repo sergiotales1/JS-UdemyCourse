@@ -1,7 +1,15 @@
-194 - 211 :
+displayMovements() :
 Using the movements__row to implant into html the data of the account1.movements with forEach method.
 Here we are basically updating the app with the movements.
 
-224 - 234 :
+createUsernames() :
 We use .map to change the strings of owner in order to create a username into every account array.
 We saw what is SIDE EFFECT that represents some kind of action or function that don't return anything just change the actual code.
+
+calcDisplayBalance() :
+We use .reduce method on the movements array in order to display into the labelBalance (html part) the total balance of the entire movements array
+
+calcDisplaySummary() :
+With .filter and .reduce we catch up all deposits and withdrawals of the selected movements array of the selected account, after catching the deposit and withdrawals we display them into the HTML.
+We also display the interest tax which effects all deposits, to adquire this tax we use a filter to catch every deposit then we map through the array changing the values to the ones multiplied by the interest of 1.2.
+After we have the correct value into the array we use a .filter to bring out every value with is above 1 to finally sum all values using .reduce and then finally displaying into labelSumInterest HTML element.
