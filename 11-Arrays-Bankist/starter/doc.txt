@@ -1,3 +1,18 @@
+btnLogin.addEventListener() :
+Allows the user to entry into the application once its informed correctly the username and pin.
+the .find will set into the currentAccount variable the object that is the same as acc.owner informed by the user .
+Once into the app we will change the UI informations according the currentAccount values.
+
+e.preventDefault() only has the function of canceling the page reload after submitting a form
+inputLoginPin.blur(); will remove the focus into the pin form place ************
+
+btnTransfer.addEventListener() :
+We create 2 variables, amount and receiverAcc which will store the amount and acc that will be transferred for some bucks.
+Using if statement we check if amount is greater than 0 (amount > 0 &&), if there is an account that is mentioned by the user (receiverAcc &&), if currentAccount.balance >= amount && and receiverAcc?.username !== currentAccount.username (different) 
+
+after checking we add the movements into the array and update the UI.
+
+
 displayMovements() :
 Using the movements__row to implant into html the data of the account1.movements with forEach method.
 Here we are basically updating the app with the movements.
