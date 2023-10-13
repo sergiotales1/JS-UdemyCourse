@@ -12,6 +12,9 @@ Using if statement we check if amount is greater than 0 (amount > 0 &&), if ther
 
 after checking we add the movements into the array and update the UI.
 
+btnClose.addEventListener() :
+This is the place were we close accounts by deleting them from the accounts array. To do it we catch the input value of username and pin (it has to be of currentAccount), them we store into index variable the index of the username that we want to delete, after that we use splice(index, 1) to delete this account from accounts array and set the opacity back to 0 (hiding the app UI)
+
 
 displayMovements() :
 Using the movements__row to implant into html the data of the account1.movements with forEach method.
