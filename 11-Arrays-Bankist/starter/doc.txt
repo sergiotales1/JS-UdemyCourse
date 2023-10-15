@@ -19,10 +19,18 @@ After checking displays the UI.
 btnClose.addEventListener() :
 This is the place were we close accounts by deleting them from the accounts array. To do it we catch the input value of username and pin (it has to be of currentAccount), them we store into index variable the index of the username that we want to delete, after that we use splice(index, 1) to delete this account from accounts array and set the opacity back to 0 (hiding the app UI)
 
+btnSort.addEventListener() :
+Create a variable to manage the current status of sorted and once this button is clicked it will send to display the currentAccount.movements and the !sorted.
+!sorted(true) -> if sort is equal true then we will send this to displayMovements() and the list containing all movements will no longer be organized by value.
+!sorted(false) -> (default) if sort is equal false then we will send this to displayMovements and will become true organizing the elements.
+basically once true and clicked it will become false and unsorted, once false and clicked it will become true and sorted
 
 displayMovements() :
 Using the movements__row to implant into html the data of the account1.movements with forEach method.
 Here we are basically updating the app with the movements.
+
+---- CHANGE ----
+We changed displayMovements() to now accept 2 params, one is sort that by default is false, if true it will sort the whole array and display the sorted one, if false it will only display the movements array without order.
 
 createUsernames() :
 We use .map to change the strings of owner in order to create a username into every account array.
