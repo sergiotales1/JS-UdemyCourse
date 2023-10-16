@@ -472,7 +472,6 @@ console.log(movements);
 
 movements.sort((a, b) => b - a);
 console.log(movements);
-*/
 
 const arr = [1, 2, 3, 4, 5, 6, 7];
 
@@ -498,11 +497,118 @@ labelBalance.addEventListener('click', () => {
   // transform nodeList into array and automatically use a call back function to pass through the array and transform every element into a number
   const movementsUI = Array.from(document.querySelectorAll('.movements__value'), cur =>
     Number(cur.textContent.replace('€', ''))
-  );
+    );
 
-  // Same as =
-  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
-
+    // Same as =
+    const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+    
   console.log(movementsUI2.map(e => Number(e.textContent.replace('€', ''))));
   console.log(movementsUI);
 });
+
+
+/////////////////////////////////////////////////////////////
+// Array Methods Practice
+// 1.
+const depositSum = accounts
+.flatMap(acc => acc.movements)
+.filter(mov => mov > 0)
+.reduce((acc, cur) => acc + cur, 0);
+console.log(depositSum);
+
+// 2.
+// const numDeposit1000 = accounts.flatMap(acc => acc.movements).filter(mov => mov >= 1000).length;
+// console.log(numDeposit1000);
+const numDeposit1000 = accounts
+.flatMap(acc => acc.movements)
+.reduce((acc, cur) => (cur > 1000 ? ++acc : acc), 0);
+console.log(numDeposit1000);
+const { deposits: dep, withdrawals: wit } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (acc, cur) => {
+      // cur > 0 ? (acc.deposits += cur) : (acc.withdrawals += cur);
+      // return acc;
+      acc[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return acc;
+    },
+    { deposits: 0, withdrawals: 0 }
+    );
+    console.log(dep, wit);
+    
+    // 4.
+    // this is a nice word -> This is a Nice Title
+    const convertTitleCase = title => {
+      const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'in', 'on', 'with', 'is', 'one'];
+      let titleCase = title
+      .toLowerCase()
+      .split(' ')
+      .map((word, i) =>
+      exceptions.includes(word) && i !== 0 ? word : word[0].toUpperCase() + word.slice(1)
+      )
+      .join(' ');
+      
+      return titleCase;
+    };
+    
+    console.log(convertTitleCase('This is an actual title'));
+    
+    console.log(convertTitleCase('and this is good but not precisely a title'));
+    
+    console.log(convertTitleCase('well this is another one haha'));
+    
+*/
+// coding challenge 4
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+// 1.
+dogs.forEach(dog => (dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28)));
+
+// 2.
+const sarahDog = dogs.find(element => element.owners.includes('Sarah'));
+console.log(
+  sarahDog.curFood > sarahDog.recommendedFood
+    ? `${sarahDog.owners[0]}'s dog is eating too much`
+    : `${sarahDog.owners[0]}'s dog is eating too little`
+);
+
+// 3.
+const ownersEatTooMuch = dogs
+  .filter(cur => cur.curFood > cur.recommendedFood)
+  .flatMap(cur => cur.owners);
+console.log(ownersEatTooMuch);
+
+const ownersEatTooLittle = dogs
+  .filter(cur => cur.curFood < cur.recommendedFood)
+  .flatMap(cur => cur.owners);
+console.log(ownersEatTooLittle);
+
+// 4.
+console.log(ownersEatTooMuch.join(' and ').concat("'s dogs eat too much"));
+console.log(ownersEatTooLittle.join(' and ').concat("'s dogs eat too little"));
+
+// 5.
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+console.log(dogs);
+
+// 6.
+console.log(
+  dogs.some(
+    dog => dog.curFood <= dog.recommendedFood * 1.1 && dog.curFood >= dog.recommendedFood * 0.9
+  )
+);
+
+// 7.
+const okayDogs = dogs.filter(
+  dog => dog.curFood <= dog.recommendedFood * 1.1 && dog.curFood >= dog.recommendedFood * 0.9
+);
+console.log(okayDogs);
+
+// 8.
+const dogsCopy = Array.from(dogs);
+console.log(dogsCopy.sort((a, b) => a.recommendedFood - b.recommendedFood));
