@@ -238,6 +238,7 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 // Conversion
+/*
 console.log(Number('23'));
 console.log(+'23'); // both are the same
 
@@ -257,3 +258,58 @@ console.log(Number.isNaN(23 / 0));
 console.log(Number.isFinite(20));
 console.log(Number.isFinite(+'20px')); // this is not finite but a NaN
 console.log(Number.isFinite(23 / 0));
+
+// square root
+// how to calculate square root into js
+console.log(Math.sqrt(25));
+console.log(25 ** (1 / 2));
+console.log(9 ** (1 / 3));
+
+console.log(Math.max(5, 19, 8, 7, 20, 90));
+console.log(Math.min(5, 19, 8, 7, 20, 90));
+console.log(Math.min(5, '19', 8, 7, 20, 90)); // also does coercion
+
+// round
+console.log(Math.trunc(Math.random() * 6) + 1);
+
+const randomInt = (max, min) => Math.trunc(Math.random() * (max - min) + min) + 1;
+// this function does for ex 20 - 10 = 10 + 10 (in that way we will never receive a number minor than 10 and at the same time if we do receive 0 we will add min (10) avoiding this 0 value)
+console.log(randomInt(20, 10));
+
+// round - throws away decimal part
+console.log(Math.round(3.2));
+
+// ceil - rounds to more
+console.log(Math.ceil(3.4)); // 4
+
+// floor - rounds down
+console.log(Math.floor(3.4)); // 3
+
+// difference between floor and trunc
+console.log(Math.trunc(-23.3)); // trunc is chocker
+console.log(Math.floor(-23.3));
+
+// using toFixed() <---- this will fix the decimal part round and limiting to the param sent
+console.log(+(3.454).toFixed(1)); // returns a string so we use + to convert to number
+
+console.log(194 % 31);
+
+const isEven = n => n % 2 === 0;
+
+console.log(isEven(2));
+console.log(isEven(23));
+console.log(isEven(98));
+
+labelBalance.addEventListener('click', () => {
+  [...document.querySelectorAll('.movements__row')].forEach((row, i) => {
+    i % 2 === 0 ? (row.style.backgroundColor = 'orange') : (row.style.backgroundColor = 'blue');
+  });
+});
+
+// numeric separators
+
+// 192,020,200
+console.log(192_020_200);
+
+// this allows us to separate numbers in order to make more readable
+*/
