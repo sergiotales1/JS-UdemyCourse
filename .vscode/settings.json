@@ -1,4 +1,5 @@
 {
   "cSpell.words": ["IIFE", "movs", "Ristorante", "Rossi"],
-  "cSpell.language": "en,pt,pt-BR,lorem,en-US,en-GB"
+  "cSpell.language": "en,pt,pt-BR,lorem,en-US,en-GB",
+  "liveServer.settings.port": 5501
 }
