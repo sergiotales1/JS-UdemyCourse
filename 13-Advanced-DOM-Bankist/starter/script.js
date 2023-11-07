@@ -9,6 +9,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const nav = document.querySelector('.nav');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -88,7 +89,71 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${+clicked.dataset.tab}`)
     .classList.add(`operations__content--active`);
 });
+
+// Menu fade animation
+
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    console.log(link.closest('.nav'));
+    console.log(link, siblings);
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  console.log(entry.isIntersecting);
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+
+headerObserver.observe(header);
+
 /*
+const obsCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting === true) nav.classList.add('sticky');
+    else nav.classList.remove('sticky');
+    console.log(entry);
+  });
+};
+
+const obsOptions = {
+  root: null,
+  threshold: 0.1,
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
+// Sticky navigation
+// const initialCoords = section1.getBoundingClientRect();
+
+// window.addEventListener('scroll', () => {
+//   // if (window.scrollY > nav.getBoundingClientRect().top) to start with the sticky nav
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
 const h1 = document.querySelector('h1');
 console.log(h1);
 console.log(h1.childNodes);
