@@ -279,7 +279,6 @@ const martha = new Student('Martha Jones', 2012, 'Computer Science');
 martha.introduce();
 martha.calcAge();
 
-*/
 
 const PersonProto = {
   calcAge() {
@@ -307,4 +306,161 @@ StudentProto.introduce = function () {
 const jay = Object.create(StudentProto);
 
 jay.init('Jay', 2010, 'Computer Science');
-console.log('test');
+
+*/
+
+class Account {
+  // Public fields
+  locale = navigator.language;
+
+  // Private fields
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    // protected property
+    this.#pin = pin;
+    // this._movements = [];
+    // this.locale = navigator.language;
+    console.log(`Thanks for opening an account ${owner}`);
+  }
+
+  // public methods
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+    return this;
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+  requestLoan(val) {
+    if (this._approvedLoan) {
+      console.log(`Loan approved`);
+      this.deposit(val);
+      return this;
+    }
+  }
+
+  static helper() {
+    console.log('Helper');
+  }
+
+  // private methods
+  #approvedLoan(val) {
+    return true;
+  }
+}
+
+const jonas = new Account('Jonas', 'EUR', 1111);
+jonas.deposit(200);
+jonas.withdraw(300);
+
+console.log(jonas);
+
+Account.helper();
+jonas.deposit(200).deposit(399).withdraw(929).requestLoan(2020);
+console.log(jonas.getMovements());
+
+/////////////////////////////////
+// Coding challenge 4
+
+const CarCl = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+
+CarCl.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
+
+CarCl.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
+
+//1-
+
+const EV = function (make, speed, charge) {
+  CarCl.call(this, make, speed);
+  this.charge = charge;
+};
+
+EV.prototype = Object.create(CarCl.prototype);
+
+// 2-
+
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+// 3-
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge -= 1;
+  console.log(
+    `${this.make} is going at ${this.speed} km/h and still have ${this.charge}% of battery`
+  );
+};
+
+class Car {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+    return this;
+  }
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+    return this;
+  }
+}
+
+class EV6 extends Car {
+  #charge;
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge -= 1;
+    console.log(
+      `${this.make} is going at ${this.speed} km/h and still have ${
+        this.#charge
+      }% of battery`
+    );
+    return this;
+  }
+}
+
+const rivian = new EV6('Rivian', 120, 23);
+console.log(rivian);
+
+rivian
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .chargeBattery(50)
+  .accelerate()
+  .brake();
