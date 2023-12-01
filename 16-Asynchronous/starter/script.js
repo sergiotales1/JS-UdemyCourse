@@ -141,7 +141,6 @@ btn.addEventListener('click', function () {
 getCountryData('germany');
 
 
-*/
 
 const whereAmI = function (lat, lng) {
   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
@@ -162,3 +161,121 @@ const whereAmI = function (lat, lng) {
 whereAmI(52.508, 13.381);
 whereAmI(19.037, 72.873);
 whereAmI(-33.933, 18.474);
+
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery draw is happening!');
+
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN');
+    } else {
+      reject(new Error('You lost your money'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(2)
+  .then(() => {
+    console.log('i waited 2 seconds');
+    return new wait(1);
+  })
+  .then(() => {
+    console.log('i waited 1 second');
+  });
+
+
+const getPos = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+getPos()
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+
+const whereAmI = function () {
+  getPos()
+    .then(res => {
+      const { latitude: lat, longitude: lng } = res.coords;
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.city === undefined) throw new Error('Place not found');
+      if (data.country === undefined)
+        throw new Error('You exceed the api limit');
+      console.log(`You are in ${data.city}, ${data.country}`);
+      fetch(`https://restcountries.com/v2/name/${data.country}`)
+        .then(response => response.json())
+        .then(data => renderCountry(data[0]))
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+};
+whereAmI();
+
+*/
+let currentImg;
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const imgEl = document.createElement('img');
+    imgEl.src = imgPath;
+    imgEl.addEventListener('load', () => {
+      document.body.insertAdjacentElement('afterbegin', imgEl);
+      resolve(imgEl);
+    });
+    imgEl.addEventListener('error', () => {
+      reject(new Error(`image not found`));
+    });
+  });
+};
+
+// createImage('img/img-1.jpg')
+//   .then(res => {
+//     wait(2).then(() => {
+//       res.style.display = 'none';
+//       createImage('img/img-2.jpg').then(res => {
+//         wait(2).then(() => {
+//           res.style.display = 'none';
+//         });
+//       });
+//     });
+//   })
+//   .catch(err => console.log(err));
+
+let currImg;
+createImage('img/img-1.jpg')
+  .then(res => {
+    console.log('img 1 loaded');
+    currImg = res;
+    return wait(2);
+  })
+  .then(() => {
+    currImg.style.display = 'none';
+    return createImage('img/img-2.jpg');
+  })
+  .then(res => {
+    currImg = res;
+    return wait(2);
+  })
+  .then(() => {
+    currImg.style.display = 'none';
+  })
+  .catch(err => console.log(err));
