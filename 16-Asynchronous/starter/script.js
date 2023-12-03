@@ -29,6 +29,19 @@ const renderCountry = function (data, className = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
+
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+    return response.json();
+  });
+};
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
 ///////////////////////////////////////
 
 // const getCountryData = function (country) {
@@ -224,7 +237,6 @@ const whereAmI = function () {
 };
 whereAmI();
 
-*/
 let currentImg;
 
 const wait = function (seconds) {
@@ -279,3 +291,182 @@ createImage('img/img-1.jpg')
     currImg.style.display = 'none';
   })
   .catch(err => console.log(err));
+
+const getPos = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  try {
+    const pos = await getPos();
+    const { latitude: lat, longitude: lng } = pos.coords;
+
+    const geo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    if (!geo.ok) throw new Error('Problem getting geolocation data');
+
+    const dataGeo = await geo.json();
+
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.country}`
+    );
+    if (!res.ok) throw new Error('Problem getting country');
+
+    const data = await res.json();
+    renderCountry(data[0]);
+    return `you are in ${dataGeo.city}, ${dataGeo.country}`;
+  } catch (err) {
+    console.error(err);
+    renderError(`Something went wrong ${err}`);
+
+    throw err;
+  }
+};
+console.log('1- will get your location');
+whereAmI()
+  .then(place => console.log(place))
+  .catch(err => console.log(err.message))
+  .finally(console.log('3- we got your location'));
+
+(async function () {
+  try {
+    const city = whereAmI();
+    console.log(city);
+  } catch (err) {
+    console.err(`2: ${err.message}`);
+  }
+  console.log('3- we got your location');
+})();
+
+
+const get3Countries = async function (c1, c2, c3) {
+  try {
+    // const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    // const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    // const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${c1}`),
+      getJSON(`https://restcountries.com/v2/name/${c2}`),
+      getJSON(`https://restcountries.com/v2/name/${c3}`),
+    ]);
+    console.log(data.map(d => d[0].capital));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+get3Countries('brazil', 'portugal', 'usa');
+
+
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v2/name/mexico`),
+    getJSON(`https://restcountries.com/v2/name/italy`),
+    getJSON(`https://restcountries.com/v2/name/egypt`),
+  ]);
+  console.log(res[0]);
+})();
+
+const timeout = function (s) {
+  return new Promise(function (_, reject) {
+    setTimeout(() => {
+      reject(new Error('request took too long'));
+    }, s);
+  });
+};
+
+Promise.race([
+  getJSON(`https://restcountries.com/v2/name/egypt`),
+  timeout(1000),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('Failed'),
+  Promise.resolve('Success'),
+]).then(res => console.log(res));
+
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('Failed'),
+  Promise.resolve('Success'),
+]).then(res => console.log(res));
+
+*/
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const imgEl = document.createElement('img');
+    imgEl.src = imgPath;
+    imgEl.addEventListener('load', () => {
+      document.body.insertAdjacentElement('afterbegin', imgEl);
+      resolve(imgEl);
+    });
+    imgEl.addEventListener('error', () => {
+      reject(new Error(`image not found`));
+    });
+  });
+};
+
+let currImg;
+
+// createImage('img/img-1.jpg')
+//   .then(res => {
+//     console.log('img 1 loaded');
+//     currImg = res;
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currImg.style.display = 'none';
+//     return createImage('img/img-2.jpg');
+//   })
+//   .then(res => {
+//     currImg = res;
+//     console.log('img 2 loaded');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currImg.style.display = 'none';
+//   })
+//   .catch(err => console.log(err));
+
+async function loadNPause() {
+  try {
+    let image = await createImage('img/img-1.jpg');
+    console.log('img 1 loaded');
+    await wait(2);
+    image.style.display = 'none';
+
+    image = await createImage('img/img-2.jpg');
+    console.log('img 2 loaded');
+    await wait(2);
+    image.style.display = 'none';
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// loadNPause().catch(err => err);
+
+async function loadAll(imgPaths) {
+  try {
+    const imgs = imgPaths.map(async el => {
+      return await createImage(el);
+    });
+    console.log(imgs);
+
+    const imgsEl = await Promise.all(imgs);
+    imgsEl.forEach(el => {
+      el.classList.add('parallel');
+    });
+    console.log(imgsEl);
+  } catch (err) {
+    console.error(err);
+  }
+}
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
