@@ -1,45 +1,114 @@
-const recipeContainer = document.querySelector('.recipe');
+import * as model from './model.js';
+import { MODAL_CLOSE_SEC } from './config.js';
+import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
+import addRecipeView from './views/addRecipeView.js';
 
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+// if (module.hot) {
+//   module.hot.accept();
+// }
+
+const recipeContainer = document.querySelector('.recipe');
 
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
 
-const url =
-  'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886';
-// 'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcc13';
-
-const showRecipe = async () => {
+const controlRecipes = async () => {
   try {
-    const res = await fetch(url);
-    const data = await res.json();
+    const id = window.location.hash.slice(1);
 
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+    if (!id) return;
 
-    let { recipe } = data.data;
-    recipe = {
-      publisher: recipe.publisher,
-      ingredients: recipe.ingredients,
-      id: recipe.id,
-      title: recipe.title,
-      servings: recipe.servings,
-      cookingTime: recipe.cooking_time,
-      image: recipe.image,
-      sourceUrl: recipe.image_url,
-    };
-    console.log(recipe);
+    recipeView.renderSpinner();
 
-    console.log(data);
+    resultsView.update(model.getSearchResultsPage());
+
+    bookmarksView.update(model.state.bookmarks);
+
+    await model.loadRecipe(id);
+
+    recipeView.render(model.state.recipe);
   } catch (err) {
-    alert(err);
+    recipeView.renderError();
   }
 };
 
-showRecipe();
+const controlSearchResults = async function () {
+  try {
+    resultsView.renderSpinner();
+    const query = searchView.getQuery();
+    if (!query) return;
+
+    await model.loadSearchResults(query);
+
+    resultsView.render(model.getSearchResultsPage(1));
+
+    paginationView.render(model.state.search);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const controlPagination = function (goToPage) {
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  paginationView.render(model.state.search);
+};
+
+const controlServings = function (newServings) {
+  model.updateServings(newServings);
+
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
+};
+
+const controlAddBookmark = function () {
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id);
+
+  recipeView.update(model.state.recipe);
+
+  bookmarksView.render(model.state.bookmarks);
+};
+
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    addRecipeView.renderSpinner();
+
+    await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+    recipeView.render(model.state.recipe);
+
+    addRecipeView.renderMessage();
+
+    setTimeout(() => {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000);
+  } catch (err) {
+    console.error(err);
+    addRecipeView.renderError(err.message);
+  }
+};
+
+const init = function () {
+  bookmarksView.addHandlerRender(controlBookmarks);
+  recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
+  searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
+};
+init();
